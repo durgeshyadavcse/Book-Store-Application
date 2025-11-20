@@ -20,22 +20,23 @@ function Signup() {
       email: data.email,
       password: data.password,
     };
-    await axios
-      .post("http://localhost:4001/user/signup", userInfo)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-          toast.success("Signup Successfully");
-          navigate(from, { replace: true });
-        }
+    try {
+      const base = import.meta.env.VITE_API_URL || "http://localhost:4001";
+      const res = await axios.post(`${base}/user/signup`, userInfo);
+      console.log(res.data);
+      if (res.data) {
+        toast.success("Signup Successfully");
+        navigate(from, { replace: true });
         localStorage.setItem("Users", JSON.stringify(res.data.user));
-      })
-      .catch((err) => {
-        if (err.response) {
-          console.log(err);
-          toast.error("Error: " + err.response.data.message);
-        }
-      });
+      }
+    } catch (err) {
+      console.log(err?.response ?? err.message ?? err);
+      if (err.response) {
+        toast.error("Error: " + err.response.data.message);
+      } else {
+        toast.error("Network error: unable to reach server");
+      }
+    }
   };
   return (
     <>
@@ -74,6 +75,7 @@ function Signup() {
                 <br />
                 <input
                   type="email"
+                  autoComplete="email"
                   placeholder="Enter your email"
                   className="w-80 px-3 py-1 border rounded-md outline-none"
                   {...register("email", { required: true })}
@@ -90,7 +92,8 @@ function Signup() {
                 <span>Password</span>
                 <br />
                 <input
-                  type="text"
+                  type="password"
+                  autoComplete="new-password"
                   placeholder="Enter your password"
                   className="w-80 px-3 py-1 border rounded-md outline-none"
                   {...register("password", { required: true })}
@@ -116,14 +119,15 @@ function Signup() {
                     }
                   >
                     Login
-                  </button>{" "}
-                  <Login />
+                  </button>
                 </p>
               </div>
             </form>
           </div>
         </div>
       </div>
+      {/* Render Login component outside the signup form to avoid invalid DOM nesting (dialog/form inside <p>) */}
+      <Login />
     </>
   );
 }

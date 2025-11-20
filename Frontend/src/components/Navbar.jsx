@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Login from "./Login";
 import Logout from "./Logout";
 import { useAuth } from "../context/AuthProvider";
@@ -36,19 +37,36 @@ function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToSection = (id) => {
+    const doScroll = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    };
+    if (location.pathname !== "/") {
+      navigate("/");
+      // wait for navigation/render
+      setTimeout(doScroll, 150);
+    } else {
+      doScroll();
+    }
+  };
+
   const navItems = (
     <>
       <li>
-        <a href="/">Home</a>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <a href="/course">Course</a>
+        <Link to="/course">Course</Link>
       </li>
       <li>
-        <a>Contact</a>
+        <button onClick={() => scrollToSection("contact")} className="link">Contact</button>
       </li>
       <li>
-        <a>About</a>
+        <button onClick={() => scrollToSection("about")} className="link">About</button>
       </li>
     </>
   );

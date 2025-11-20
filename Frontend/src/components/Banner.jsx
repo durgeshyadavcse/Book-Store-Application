@@ -1,5 +1,4 @@
 import React from "react";
-import banner from "../../public/Banner.png";
 function Banner() {
   return (
     <>
@@ -7,13 +6,11 @@ function Banner() {
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36">
           <div className="space-y-8">
             <h1 className="text-2xl md:text-4xl font-bold">
-              Hello, welcomes here to learn something{" "}
-              <span className="text-pink-500">new everyday!!!</span>
+              Hello, welcome here to learn something new and exciting{" "}
+              <span className="text-blue-500">new everyday!!!</span>
             </h1>
             <p className="text-sm md:text-xl">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor,
-              et totam. Tempora amet atque expedita, quae corrupti totam sed
-              pariatur corporis at veniam est voluptas animi!
+           "A digital haven where stories meet technology, and readers discover the joy of books with just a click! Our Bookstore redefines the reading experience by offering a seamless platform to explore, purchase, and enjoy books anytime, anywhere. From timeless classics to the latest bestsellers, we bring the entire literary world to your fingertips."
             </p>
             <label className="input input-bordered flex items-center gap-2">
               <svg
@@ -32,9 +29,9 @@ function Banner() {
         </div>
         <div className=" order-1 w-full mt-20 md:w-1/2">
           <img
-            src={banner}
+            src="/Banner.png"
             className="md:w-[550px] md:h-[460px] md:ml-12"
-            alt=""
+            alt="Banner"
           />
         </div>
       </div>

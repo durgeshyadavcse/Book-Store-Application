@@ -5,8 +5,16 @@ function Cards({ item }) {
     <>
       <div className="mt-4 my-3 p-3">
         <div className="card w-92 bg-base-100 shadow-xl hover:scale-105 duration-200 dark:bg-slate-900 dark:text-white dark:border">
-          <figure>
-            <img src={item.image} alt="Shoes" />
+          <figure className="flex items-center justify-center">
+            <img
+              src={item.image}
+              alt={item.title || item.name || "Book image"}
+              className="w-[250px] h-[320px] object-cover object-center rounded-md"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "https://via.placeholder.com/250x320?text=No+Image";
+              }}
+            />
           </figure>
           <div className="card-body">
             <h2 className="card-title">
